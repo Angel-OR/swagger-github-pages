@@ -1,0 +1,587 @@
+openapi: 3.0.1
+info:
+  title: Seguridad
+  description: Una Web API de ASP.NET Core para gestionar la seguridad
+paths:
+  '/volaris-api/Employee/GetId/{id}':
+    get:
+      tags:
+        - Employee
+      summary: Obtiene un empleado por un Id
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Response'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+  /volaris-api/Menu/GetAll:
+    get:
+      tags:
+        - Menu
+      summary: Obtiene una respuesta con todos los menus
+      responses:
+        '200':
+          description: OK
+  /volaris-api/Menu/SaveAll:
+    post:
+      tags:
+        - Menu
+      summary: Guarda multiples registros de Menus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Menu'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Menu'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Menu'
+      responses:
+        '200':
+          description: OK
+  '/volaris-api/Menu/GetMenuByRoleId/{roleId}':
+    get:
+      tags:
+        - Menu
+      summary: Trae los menus por roles
+      parameters:
+        - name: roleId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+  /volaris-api/Module/GetAll:
+    get:
+      tags:
+        - Module
+      summary: Obtiene una respuesta con todos los Modulos
+      responses:
+        '200':
+          description: OK
+  /volaris-api/Page/GetAll:
+    get:
+      tags:
+        - Page
+      summary: Obtiene una respuesta con todos los pagees
+      responses:
+        '200':
+          description: OK
+  '/volaris-api/Page/Delete/{id}':
+    delete:
+      tags:
+        - Page
+      summary: Elimina temporalmente una pagina por un Id
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /volaris-api/Page/Save:
+    post:
+      tags:
+        - Page
+      summary: Guarda una pagina
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Page'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Page'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/Page'
+      responses:
+        '200':
+          description: OK
+  /volaris-api/Rol/GetAll:
+    get:
+      tags:
+        - Rol
+      summary: Obtiene una respuesta con todos los roles
+      responses:
+        '200':
+          description: OK
+  /volaris-api/User/Login:
+    post:
+      tags:
+        - User
+      summary: Metodo para iniciar sesion
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+      responses:
+        '200':
+          description: OK
+  /volaris-api/User/Values:
+    get:
+      tags:
+        - User
+      summary: Metodo para obtener la informacion del usuario
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InfoUser'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoUser'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InfoUser'
+  '/volaris-api/User/GetCheckEmailExistence/{email}/{username}':
+    get:
+      tags:
+        - User
+      summary: "Obtiene una respuesta si existe el email y el username asociado a un usuario. \r\nEn TotalRows viene especificado si existe o no, 1 : si existe (alguno de los 2), 0 : no hay nada asociado"
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /volaris-api/User/ChangePassword:
+    post:
+      tags:
+        - User
+      summary: Actualiza el password de un usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordDTO'
+      responses:
+        '200':
+          description: OK
+  /volaris-api/User/Save:
+    post:
+      tags:
+        - User
+      summary: Guarda un registro de usuario y si no existe el empleado lo crea
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+  /volaris-api/User/Patch:
+    patch:
+      tags:
+        - User
+      summary: Edita solo la informacion del usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: OK
+  /volaris-api/User/GetAll:
+    get:
+      tags:
+        - User
+      summary: Devuelve los usuarios siempre y cuando estes autorizado para consultarlos
+      responses:
+        '200':
+          description: OK
+  '/volaris-api/User/Delete/{id}':
+    delete:
+      tags:
+        - User
+      summary: Elimina temporalmente un usuario por un Id
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    ChangePasswordDTO:
+      type: object
+      properties:
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Employee:
+      required:
+        - createdDate
+        - isActive
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        trail:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+        employeeNumber:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        paternalSurname:
+          type: string
+          nullable: true
+        maternalSurname:
+          type: string
+          nullable: true
+        profilePhotoId:
+          type: integer
+          format: int64
+        email:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+      additionalProperties: false
+    InfoUser:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        roleId:
+          type: integer
+          format: int64
+        employeeId:
+          type: integer
+          format: int64
+        profilePhotoId:
+          type: integer
+          format: int64
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        employeeNumber:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        menus:
+          type: array
+          items:
+            $ref: '#/components/schemas/Menu'
+          nullable: true
+      additionalProperties: false
+    Menu:
+      required:
+        - createdDate
+        - isActive
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        trail:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+        roleId:
+          type: integer
+          format: int64
+          nullable: true
+        pageId:
+          type: integer
+          format: int64
+          nullable: true
+        rol:
+          $ref: '#/components/schemas/Rol'
+        userPage:
+          $ref: '#/components/schemas/UserPage'
+      additionalProperties: false
+    Module:
+      required:
+        - createdDate
+        - isActive
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        trail:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Page:
+      required:
+        - createdDate
+        - isActive
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        trail:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+        name:
+          type: string
+          nullable: true
+        moduleId:
+          type: integer
+          format: int64
+        urlPath:
+          type: string
+          nullable: true
+        module:
+          $ref: '#/components/schemas/Module'
+      additionalProperties: false
+    Response:
+      type: object
+      properties:
+        totalRows:
+          type: integer
+          format: int32
+          nullable: true
+        pageIndex:
+          type: integer
+          format: int32
+          nullable: true
+        pageSize:
+          type: integer
+          format: int32
+          nullable: true
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+          nullable: true
+        data:
+          nullable: true
+        function:
+          type: string
+          nullable: true
+        parameters:
+          nullable: true
+        sTiempos:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    Rol:
+      required:
+        - createdDate
+        - isActive
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        trail:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+        name:
+          type: string
+          nullable: true
+      additionalProperties: false
+    User:
+      required:
+        - createdDate
+        - isActive
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        trail:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+        username:
+          type: string
+          nullable: true
+        rolId:
+          type: integer
+          format: int64
+        rol:
+          $ref: '#/components/schemas/Rol'
+        employeeId:
+          type: integer
+          format: int64
+        employee:
+          $ref: '#/components/schemas/Employee'
+        email:
+          type: string
+          nullable: true
+        passwordHash:
+          type: string
+          nullable: true
+        passwordSalt:
+          type: string
+          nullable: true
+        lastLogin:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    UserDTO:
+      type: object
+      properties:
+        password:
+          type: string
+          description: Contraseña del usuario
+          nullable: true
+        user:
+          type: string
+          description: Nombre del usuario
+          nullable: true
+      additionalProperties: false
+      description: Clase DTO para el usuario en el login
+    UserPage:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        pageId:
+          type: integer
+          format: int64
+        name:
+          type: string
+          nullable: true
+        pageName:
+          type: string
+          nullable: true
+        urlPath:
+          type: string
+          nullable: true
+        moduleName:
+          type: string
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+security:
+  - Bearer: [ ]
