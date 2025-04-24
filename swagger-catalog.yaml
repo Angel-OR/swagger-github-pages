@@ -1,0 +1,189 @@
+openapi: 3.0.1
+info:
+  title: Catálogo
+  description: Una Web API de ASP.NET Core para gestionar los diferentes catálogos
+paths:
+  '/volaris-api/ExchangeRate/GetId/{id}':
+    get:
+      tags:
+        - ExchangeRate
+      summary: Obtiene un tipo de cambio por un Id
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  '/volaris-api/ExchangeRate/Delete/{id}':
+    delete:
+      tags:
+        - ExchangeRate
+      summary: Elimina temporalmente un tipo de cambio por un Id
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+  /volaris-api/ExchangeRate/Save:
+    post:
+      tags:
+        - ExchangeRate
+      summary: Guarda un registro de tipo de cambio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExchangeRate'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ExchangeRate'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ExchangeRate'
+      responses:
+        '200':
+          description: OK
+  '/volaris-api/ExchangeRate/GetPaginatedExchangeRate/{pageIndex}/{pageSize}/{dateInitial}/{dateFin}':
+    get:
+      tags:
+        - ExchangeRate
+      summary: Obtiene un tipo de cambio paginado por fechas
+      parameters:
+        - name: pageIndex
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: dateInitial
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: dateFin
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+  /volaris-api/ExchangeRate/BulkLoadExchangeRate:
+    post:
+      tags:
+        - ExchangeRate
+      summary: Carga masiva para tipo de cambio
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Response'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Response'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/Response'
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    ExchangeRate:
+      required:
+        - createdDate
+        - isActive
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        trail:
+          type: string
+          nullable: true
+        createdDate:
+          type: string
+          format: date-time
+        isActive:
+          type: boolean
+        typeQuote:
+          type: string
+          nullable: true
+        currencyOrigin:
+          type: string
+          nullable: true
+        currencyDestination:
+          type: string
+          nullable: true
+        validFrom:
+          type: string
+          nullable: true
+        rate:
+          type: number
+          format: double
+          nullable: true
+      additionalProperties: false
+    Response:
+      type: object
+      properties:
+        totalRows:
+          type: integer
+          format: int32
+          nullable: true
+        pageIndex:
+          type: integer
+          format: int32
+          nullable: true
+        pageSize:
+          type: integer
+          format: int32
+          nullable: true
+        status:
+          type: integer
+          format: int32
+        message:
+          type: string
+          nullable: true
+        data:
+          nullable: true
+        function:
+          type: string
+          nullable: true
+        parameters:
+          nullable: true
+        sTiempos:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+security:
+  - Bearer: [ ]
